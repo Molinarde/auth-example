@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      database: ungram
+server:
+  port: 8081
+
+upload:
+  path: /home/evgeny/IdeaProjects/simple-project-ungram/src/main/resources/static
