@@ -1,14 +1,12 @@
 package com.example.simpleprojectungram.controller;
 
 import com.example.simpleprojectungram.model.Post;
+import com.example.simpleprojectungram.model.dto.GalleryDTO;
 import com.example.simpleprojectungram.model.dto.RecommendationDTO;
 import com.example.simpleprojectungram.service.GalleryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +22,11 @@ public class GalleryController {
     }
 
     @GetMapping
-    private ResponseEntity<List<Post>> getAllPost(@RequestParam(defaultValue = "10") int count,
+    private ResponseEntity<GalleryDTO> getAllPost(@RequestParam(defaultValue = "10") int count,
                                                   @RequestParam(defaultValue = "0") int start)
     {
         List<Post> postList = galleryService.findAllPosts();
-        if(postList.isEmpty()){
+        if(postList.isEmpty() || start >= postList.size()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -36,8 +34,15 @@ public class GalleryController {
                 .skip(start)
                 .limit(count)
                 .collect(Collectors.toList());
+        GalleryDTO galleryDTO = new GalleryDTO(collect, postList.size());
+        return new ResponseEntity<>(galleryDTO, HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+    @GetMapping("/{id}")
+    private ResponseEntity<Post> getPostById(@PathVariable String id){
+        System.out.println(id);
+        Post post = galleryService.findPostById(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @GetMapping("/user/recommendation")

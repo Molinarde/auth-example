@@ -21,7 +21,7 @@ public class ProfileService {
 
     public ProfileDTO getProfile(String userId) {
         User user = userService.getUser(userId);
-        List<Post> postList = postService.getAllPostByUserId(userId);
+        List<Post> postList = postService.getAllPostByAuthorId(userId);
 
         if (user != null && postList != null) {
             ProfileDTO profileDTO = new ProfileDTO(user, postList);

@@ -55,4 +55,8 @@ public class GalleryService {
                 .collect(Collectors.toList());
         return recommendationDTOS;
     }
+
+    public Post findPostById(String id) {
+        return postService.getPostById(id);
+    }
 }

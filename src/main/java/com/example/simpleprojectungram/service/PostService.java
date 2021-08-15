@@ -16,8 +16,8 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public List<Post> getAllPostByUserId(String userId) {
-        return postRepository.findAllByAuthorId(userId);
+    public List<Post> getAllPostByAuthorId(String authorId) {
+        return postRepository.findAllByAuthorId(authorId);
     }
 
     public Post insertPost(Post post) {
@@ -27,5 +27,9 @@ public class PostService {
 
     public List<Post> getAllPost() {
         return postRepository.findAll();
+    }
+
+    public Post getPostById(String id){
+        return postRepository.findById(id).get();
     }
 }
