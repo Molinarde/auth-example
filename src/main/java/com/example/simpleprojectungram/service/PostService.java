@@ -24,6 +24,9 @@ public class PostService {
         return postRepository.insert(post);
     }
 
+    public Post findPostById(String id){
+        return postRepository.findById(id).get();
+    }
 
     public List<Post> getAllPost() {
         return postRepository.findAll();
@@ -31,5 +34,9 @@ public class PostService {
 
     public Post getPostById(String id){
         return postRepository.findById(id).get();
+    }
+
+    public Post updatePost(Post post){
+        return postRepository.save(post);
     }
 }

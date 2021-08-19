@@ -3,11 +3,9 @@ package com.example.simpleprojectungram.controller;
 import com.example.simpleprojectungram.model.Post;
 import com.example.simpleprojectungram.model.dto.ProfileDTO;
 import com.example.simpleprojectungram.service.ProfileService;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -38,21 +35,28 @@ public class ProfileController {
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
+    @PutMapping("/update/post")
+    public ResponseEntity<Post> updatePost(@RequestParam("file") MultipartFile file,
+                                           @Valid Post post){
+        if(file.isEmpty()){
+            Post result = profileService.updatePost(post);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else{
+            Post uploadPostWithImg = profileService.uploadFile(file, post);
+            Post result = profileService.updatePost(uploadPostWithImg);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+
+
+    }
+
     @PostMapping("/add/post")
     public ResponseEntity<Post> addPost(@RequestParam("file") MultipartFile file, @Valid Post post) throws IOException {
-        if (file.getContentType().equals("image/jpeg")) {
-            File uploadDir = new File(uploadPath);
+        Post fileUpload = profileService.uploadFile(file, post);
 
-            if (uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String resultFileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
-            post.setImgName(resultFileName);
-
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
-
-            Post newPost = profileService.saveNewPost(post);
+        if (fileUpload != null) {
+            Post newPost = profileService.addPost(post);
             return new ResponseEntity<>(newPost, HttpStatus.OK);
         }
 
