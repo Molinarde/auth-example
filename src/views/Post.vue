@@ -1,8 +1,15 @@
 <template>
   <div>
-
-    <img :src="getImageUrl()" alt="">
-    <span>{{content}}</span>
+    <el-row >
+      <el-col :span="12">
+        <el-card>
+          <el-image class="img" :src="getImageUrl()" />
+          <div class="content">
+            <span>{{content}}</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -31,12 +38,15 @@ export default {
       this.authorId = response.data.authorId;
       this.content = response.data.content;
 
-      console.log(response.data)
     });
   }
 }
 </script>
 
 <style scoped>
+.content{
+  padding: 14px;
+}
+
 
 </style>

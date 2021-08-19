@@ -1,6 +1,6 @@
 <template>
   <div class="recommendation">
-    <el-card >
+    <el-card>
       <div slot="header" class="clearfix">
         <span>Recommendation</span>
         <el-button style="float: right; padding: 3px 0" type="text">Operation button</el-button>
@@ -8,7 +8,7 @@
       <div v-for="(item, index) in recommended" :key="index" class="text item">
         <div class="list-recom">
           <el-avatar :src="item.imgURL"></el-avatar>
-          <el-link :underline="false" :href="getUserURL(item.userId)">{{item.username}}</el-link>
+          <el-link :underline="false" :href="getUserLink(item.userId)">{{item.username}}</el-link>
         </div>
         <el-divider direction="horizontal"></el-divider>
 
@@ -28,8 +28,8 @@ export default {
     }
   },
   methods: {
-    getUserURL(userId){
-      return `http://localhost:8080/profile/${userId}`
+    getUserLink(userId){
+      return `/profile/${userId}`
     }
   },
   created() {
