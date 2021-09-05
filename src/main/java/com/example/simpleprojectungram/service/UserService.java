@@ -1,13 +1,10 @@
 package com.example.simpleprojectungram.service;
 
-import com.example.simpleprojectungram.model.User;
-import com.example.simpleprojectungram.model.dto.RecommendationDTO;
+import com.example.simpleprojectungram.model.Users;
 import com.example.simpleprojectungram.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -18,15 +15,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findUserById(String userId) {
+    public Users findUserById(String userId) {
         return userRepository.findById(userId).get();
     }
 
-    public User saveUser(User user) {
+    public Users saveUser(Users user) {
         return userRepository.insert(user);
     }
 
-    public List<User> findAll() {
+    public List<Users> findAll() {
         return userRepository.findAll();
     }
 }
