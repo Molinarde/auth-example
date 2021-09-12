@@ -1,7 +1,7 @@
 package com.example.simpleprojectungram.service;
 
 import com.example.simpleprojectungram.model.Post;
-import com.example.simpleprojectungram.model.User;
+import com.example.simpleprojectungram.model.Users;
 import com.example.simpleprojectungram.model.dto.ProfileDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -28,7 +28,7 @@ public class ProfileService {
     }
 
     public ProfileDTO getProfile(String userId) {
-        User user = userService.findUserById(userId);
+        Users user = userService.findUserById(userId);
         List<Post> postList = postService.getAllPostByAuthorId(userId);
 
         if (user != null && postList != null) {

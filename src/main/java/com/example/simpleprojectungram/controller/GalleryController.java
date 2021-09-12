@@ -21,7 +21,7 @@ public class GalleryController {
         this.galleryService = galleryService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     private ResponseEntity<GalleryDTO> getAllPost(@RequestParam(defaultValue = "10") int count,
                                                   @RequestParam(defaultValue = "0") int start)
     {
@@ -40,7 +40,6 @@ public class GalleryController {
 
     @GetMapping("/{id}")
     private ResponseEntity<Post> getPostById(@PathVariable String id){
-        System.out.println(id);
         Post post = galleryService.findPostById(id);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }

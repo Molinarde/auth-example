@@ -5,5 +5,11 @@ spring:
 server:
   port: 8081
 
+jwt:
+  accessTokenExpirationMs: 900000
+  refreshTokenExpirationMs: 1800000
+  secret: very_very_secret_key@@very_very_secret_key+very_very_secret_key@@very_very_secret_key+very_very_secret_key@@very_very_secret_keyvery_very_secret_key@@very_very_secret_key+very_very_secret_key@@very_very_secret_key+very_very_secret_key@@very_very_secret_key
+
+
 upload:
   path: /home/evgeny/IdeaProjects/simple-project-ungram/src/main/resources/static

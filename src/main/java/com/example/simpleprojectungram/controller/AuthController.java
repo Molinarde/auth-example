@@ -1,24 +1,50 @@
 package com.example.simpleprojectungram.controller;
 
-import com.example.simpleprojectungram.model.User;
-import com.example.simpleprojectungram.service.UserService;
+import com.example.simpleprojectungram.exception.NoEntityException;
+import com.example.simpleprojectungram.exception.NotFoundTokenException;
+import com.example.simpleprojectungram.model.dto.TokenRefreshRequest;
+import com.example.simpleprojectungram.model.dto.SignupRequest;
+import com.example.simpleprojectungram.model.dto.TokenRequest;
+import com.example.simpleprojectungram.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) throws NotFoundTokenException {
+        return new ResponseEntity<>(authService.refreshToken(tokenRefreshRequest), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody User user){
-        User saveUser = userService.saveUser(user);
-        return new ResponseEntity<>(saveUser, HttpStatus.OK);
+    public ResponseEntity<?> regUser(@RequestBody SignupRequest signupRequest) {
+
+        boolean signup = authService.signup(signupRequest);
+
+        if (signup)
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authUser(@RequestBody TokenRequest tokenRequest) throws NoEntityException {
+
+        return new ResponseEntity<>(authService.signin(tokenRequest), HttpStatus.OK);
+    }
+
+
 }

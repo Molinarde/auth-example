@@ -10,9 +10,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.*;
 
-@Document
+@Document(collection = "user")
 @Data
-public class User {
+public class Users {
 
     @Id
     private String id;
@@ -24,6 +24,6 @@ public class User {
     @Size(min = 10, max = 50)
     private String password;
     @NotEmpty
-    private Role role;
+    private Set<Role> role;
 
 }

@@ -4,16 +4,16 @@ import com.example.simpleprojectungram.model.Post;
 import com.example.simpleprojectungram.model.dto.ProfileDTO;
 import com.example.simpleprojectungram.service.ProfileService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.io.InputStream;
+import java.net.URL;
 
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -51,6 +51,7 @@ public class ProfileController {
 
     }
 
+
     @PostMapping("/add/post")
     public ResponseEntity<Post> addPost(@RequestParam("file") MultipartFile file, @Valid Post post) throws IOException {
         Post fileUpload = profileService.uploadFile(file, post);
@@ -63,9 +64,12 @@ public class ProfileController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/image/{imageName}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String imageName){
-        Resource image = profileService.loadAsResource(imageName);
-        return new ResponseEntity<>(image, HttpStatus.OK);
+    @GetMapping(value = "/image/", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> test() throws IOException {
+//        Resource image = profileService.loadAsResource(imageName);
+        URL url = new URL("https://altaitop.ru/wp-content/uploads/2021/02/6E9DuB1Nxg.jpg");
+        InputStream inputStream = url.openStream();
+        byte[] bytes = inputStream.readAllBytes();
+        return new ResponseEntity<>(bytes, HttpStatus.OK);
     }
 }

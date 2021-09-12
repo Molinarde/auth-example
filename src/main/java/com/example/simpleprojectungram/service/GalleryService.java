@@ -1,7 +1,7 @@
 package com.example.simpleprojectungram.service;
 
 import com.example.simpleprojectungram.model.Post;
-import com.example.simpleprojectungram.model.User;
+import com.example.simpleprojectungram.model.Users;
 import com.example.simpleprojectungram.model.dto.RecommendationDTO;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class GalleryService {
 
     public List<RecommendationDTO> getRecommendation() {
         Random rand = new Random();
-        List<User> all = userService.findAll();
+        List<Users> all = userService.findAll();
         if (all.size() > 5) {
             int i = rand.nextInt(all.size() - 5);
             List<RecommendationDTO> collect = all
