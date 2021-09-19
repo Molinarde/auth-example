@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     getImageUrl(imageName) {
+
       return GalleryService.getImageUrl(imageName)
     },
     load() {

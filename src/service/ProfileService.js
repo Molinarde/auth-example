@@ -1,9 +1,10 @@
 import axios from "axios";
+import authHeader from "./AuthHeader";
 
 const ProfileService = {
 
     getProfile(id) {
-        return axios.get(`/api/v1/profile/${id}`)
+        return axios.get(`/api/v1/profile/${id}`, { headers: authHeader()})
     },
     updatePost(post, imgFile) {
 

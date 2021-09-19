@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="isAuth">
+    <div>
       <el-container>
         <el-header>
           <NavMenu/>
@@ -17,25 +17,21 @@
         </el-footer>
       </el-container>
     </div>
-    <div v-else>
-      <Login/>
-    </div>
   </div>
 </template>
 
 <script>
 import NavMenu from "@/components/NavMenu";
-import Login from "@/views/Login";
 
 export default {
   name: 'app',
-  components: {Login, NavMenu},
+  components: {NavMenu},
   data() {
     return {
-      isAuth: true,
     }
   },
-  methods: {}
+  computed:{
+  }
 }
 </script>
 
