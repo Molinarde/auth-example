@@ -32,7 +32,8 @@ export default {
   },
 
   created() {
-    let id = this.$route.params.id;
+    let id = this.$route.params.idPost;
+    console.log(id)
     GalleryService.getPostById(id).then(response =>{
       this.imgName = response.data.imgName;
       this.authorId = response.data.authorId;

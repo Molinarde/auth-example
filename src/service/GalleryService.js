@@ -1,18 +1,16 @@
-import axios from "axios";
-import authHeader from "./AuthHeader";
+import api from "./interceptors/Api.js";
 
 const GalleryService = {
 
     getAllPost(count, start){
-        console.log(authHeader())
-        return axios.get(`/api/v1/gallery/?count=${count}&start=${start}`, { headers: authHeader()})
+        return api.get(`/gallery/?count=${count}&start=${start}`)
     },
 
     getRecommendationUser(){
-        return axios.get("/api/v1/gallery/user/recommendation", { headers: authHeader()})
+        return api.get("/gallery/user/recommendation")
     },
     getPostById(id) {
-        return axios.get(`/api/v1/gallery/${id}`, { headers:authHeader()})
+        return api.get(`/gallery/${id}`)
     },
     getImageUrl(imageName) {
         return `http://localhost:8081/static/${imageName}`

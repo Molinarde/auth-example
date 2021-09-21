@@ -49,14 +49,13 @@ export default {
     }
   },
   created(){
-    const params = this.$route.params.id;
+    const params = this.$route.params.idPost;
 
     GalleryService.getPostById(params).then(response =>{
       this.id = response.data.id;
       this.imgName = response.data.imgName;
       this.content = response.data.content;
       this.authorId = response.data.authorId;
-      console.log(response.data)
     })
 
   }

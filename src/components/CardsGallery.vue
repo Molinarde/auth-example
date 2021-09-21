@@ -43,7 +43,7 @@ export default {
       )
     },
     getPostUrl(postId) {
-      return `/post/${postId}`
+      return `/profile/post/${postId}`
     }
   },
   computed:{

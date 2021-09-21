@@ -5,6 +5,7 @@ import Profile from "@/views/Profile";
 import Post from "@/views/Post";
 import EditPost from "@/views/EditPost";
 import Login from "../views/Login";
+import CreatePost from "../views/CreatePost";
 
 Vue.use(VueRouter)
 
@@ -20,12 +21,17 @@ const routes = [
         component: Profile
     },
     {
-        path: "/post/:id",
+        path: "/profile/post/:idPost",
         name: "Post",
         component: Post
     },
     {
-        path: "/edit/:id",
+        path: "/profile/:idProfile/post/create",
+        name: "CreatePost",
+        component: CreatePost
+    },
+    {
+        path: "/profile/:idProfile/edit/:idPost",
         name: "Edit",
         component: EditPost
     },

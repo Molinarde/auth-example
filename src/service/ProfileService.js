@@ -1,10 +1,10 @@
-import axios from "axios";
+import api from "./interceptors/Api";
 import authHeader from "./AuthHeader";
 
 const ProfileService = {
 
     getProfile(id) {
-        return axios.get(`/api/v1/profile/${id}`, { headers: authHeader()})
+        return api.get(`/profile/${id}`, { headers: authHeader()})
     },
     updatePost(post, imgFile) {
 
@@ -16,9 +16,9 @@ const ProfileService = {
         if (imgFile != null)
             bodyFormData.append("file", imgFile)
 
-        return axios({
+        return api({
             method: "put",
-            url: `/api/v1/profile/update/post`,
+            url: `/profile/update/post`,
             data: bodyFormData,
             headers: {'Content-Type': "multipart/form-data"}
         })
@@ -29,11 +29,11 @@ const ProfileService = {
         bodyFormData.append("authorId", authorId)
         bodyFormData.append("content", content)
         bodyFormData.append("file", file)
-        return axios({
+        return api({
             method: "post",
-            url: `/api/v1/profile/add/post`,
+            url: `/profile/add/post`,
             data: bodyFormData,
-            headers: {'Content-Type': "multipart/form-data"}
+            headers:{'Content-Type': "multipart/form-data"}
         })
     }
 }

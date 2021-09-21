@@ -1,4 +1,5 @@
 import axios from "axios";
+import TokenService from "./TokenService";
 
 const AuthService = {
     login(user) {
@@ -7,7 +8,7 @@ const AuthService = {
             password: user.password
         }).then(response => {
             if(response.data.token){
-                localStorage.setItem("user", JSON.stringify(response.data))
+                TokenService.setUser(response.data)
             }
             return response.data
         })
@@ -22,7 +23,7 @@ const AuthService = {
     },
 
     logout() {
-        localStorage.removeItem("user")
+        TokenService.removeUser();
     }
 }
 
