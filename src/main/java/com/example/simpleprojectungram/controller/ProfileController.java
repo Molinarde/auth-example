@@ -2,7 +2,7 @@ package com.example.simpleprojectungram.controller;
 
 import com.example.simpleprojectungram.model.Post;
 import com.example.simpleprojectungram.model.dto.ProfileDTO;
-import com.example.simpleprojectungram.service.ProfileService;
+import com.example.simpleprojectungram.service.impl.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,18 +19,18 @@ import java.net.URL;
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
 
-    private final ProfileService profileService;
+    private final ProfileServiceImpl profileService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileServiceImpl profileService) {
         this.profileService = profileService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfileDTO> getProfileById(@PathVariable String id) {
-        ProfileDTO profile = profileService.getProfile(id);
+        ProfileDTO profile = profileService.getById(id);
 
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }

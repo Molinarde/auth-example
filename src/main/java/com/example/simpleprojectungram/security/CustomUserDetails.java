@@ -1,6 +1,6 @@
 package com.example.simpleprojectungram.security;
 
-import com.example.simpleprojectungram.model.Users;
+import com.example.simpleprojectungram.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,7 +28,7 @@ public class CustomUserDetails implements UserDetails {
         this.grantedAuthorities = grantedAuthorities;
     }
 
-    public static CustomUserDetails fromUserEntityToCustomUserDetails(Users usersEntity) {
+    public static CustomUserDetails fromUserEntityToCustomUserDetails(User usersEntity) {
         List<SimpleGrantedAuthority> collect = usersEntity.getRole().stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());

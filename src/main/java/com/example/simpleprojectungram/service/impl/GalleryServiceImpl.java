@@ -1,8 +1,10 @@
-package com.example.simpleprojectungram.service;
+package com.example.simpleprojectungram.service.impl;
 
 import com.example.simpleprojectungram.model.Post;
-import com.example.simpleprojectungram.model.Users;
+import com.example.simpleprojectungram.model.User;
 import com.example.simpleprojectungram.model.dto.RecommendationDTO;
+import com.example.simpleprojectungram.service.PostService;
+import com.example.simpleprojectungram.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,24 +12,24 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-public class GalleryService {
+public class GalleryServiceImpl {
 
     private final PostService postService;
     private final UserService userService;
 
-    public GalleryService(PostService postService, UserService userService) {
+    public GalleryServiceImpl(PostService postService, UserService userService) {
         this.postService = postService;
         this.userService = userService;
     }
 
-    public List<Post> findAllPosts() {
-        return postService.getAllPost();
+    public List<Post> getAllPost() {
+        return postService.getAll();
     }
 
 
-    public List<RecommendationDTO> getRecommendation() {
+    public List<RecommendationDTO> getRecommendationUser() {
         Random rand = new Random();
-        List<Users> all = userService.findAll();
+        List<User> all = userService.getAll();
         if (all.size() > 5) {
             int i = rand.nextInt(all.size() - 5);
             List<RecommendationDTO> collect = all
@@ -56,7 +58,7 @@ public class GalleryService {
         return recommendationDTOS;
     }
 
-    public Post findPostById(String id) {
-        return postService.getPostById(id);
+    public Post getPostById(String id) {
+        return postService.getById(id);
     }
 }

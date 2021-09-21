@@ -1,6 +1,6 @@
 package com.example.simpleprojectungram.repository;
 
-import com.example.simpleprojectungram.model.RefreshToken;
+import com.example.simpleprojectungram.security.RefreshToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

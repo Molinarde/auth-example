@@ -1,4 +1,4 @@
-package com.example.simpleprojectungram.model.dto;
+package com.example.simpleprojectungram.security.payload.request;
 
 import lombok.Data;
 

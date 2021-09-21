@@ -12,7 +12,7 @@ import java.util.*;
 
 @Document(collection = "user")
 @Data
-public class Users {
+public class User {
 
     @Id
     private String id;

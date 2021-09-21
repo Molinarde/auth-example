@@ -1,14 +1,15 @@
-package com.example.simpleprojectungram.service;
+package com.example.simpleprojectungram.security.service;
 
+import com.example.simpleprojectungram.exception.NoEntityException;
 import com.example.simpleprojectungram.exception.NotFoundTokenException;
 import com.example.simpleprojectungram.exception.TokenRefreshException;
-import com.example.simpleprojectungram.model.RefreshToken;
-import com.example.simpleprojectungram.model.Users;
+import com.example.simpleprojectungram.security.RefreshToken;
+import com.example.simpleprojectungram.model.User;
 import com.example.simpleprojectungram.repository.RefreshTokenRepository;
+import com.example.simpleprojectungram.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.sql.Ref;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,9 +21,9 @@ public class RefreshTokenService {
     private long jwtRefreshTokenExpiration;
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserService userService) {
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserServiceImpl userService) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userService = userService;
     }
@@ -31,9 +32,9 @@ public class RefreshTokenService {
         return refreshTokenRepository.findByToken(token);
     }
 
-    public RefreshToken createRefreshToken(String userId){
+    public RefreshToken createRefreshToken(String userId) throws NoEntityException {
         RefreshToken refreshToken = new RefreshToken();
-        Users userById = userService.findUserById(userId);
+        User userById = userService.getById(userId);
 
         refreshToken.setUserId(userId);
         refreshToken.setUsername(userById.getUsername());
