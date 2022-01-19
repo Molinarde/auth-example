@@ -8,9 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User insertUser(User user);
-    User getById(String id);
+    User addUser(User user);
+
     User getByUsernameAndPassword(TokenRequest loginRequest) throws NoEntityException;
+
+    Optional<User> getById(String id);
+
     Optional<User> getByUsername(String username);
+
     List<User> getAll();
 }

@@ -1,9 +1,7 @@
 package com.example.simpleprojectungram.service.impl;
 
-import com.example.simpleprojectungram.model.Post;
 import com.example.simpleprojectungram.model.User;
 import com.example.simpleprojectungram.model.dto.RecommendationDTO;
-import com.example.simpleprojectungram.service.PostService;
 import com.example.simpleprojectungram.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +10,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-public class GalleryServiceImpl {
+public class RecommendationServiceImpl {
 
-    private final PostService postService;
     private final UserService userService;
 
-    public GalleryServiceImpl(PostService postService, UserService userService) {
-        this.postService = postService;
+    public RecommendationServiceImpl(UserService userService) {
         this.userService = userService;
     }
-
-    public List<Post> getAllPost() {
-        return postService.getAll();
-    }
-
 
     public List<RecommendationDTO> getRecommendationUser() {
         Random rand = new Random();
@@ -58,7 +49,4 @@ public class GalleryServiceImpl {
         return recommendationDTOS;
     }
 
-    public Post getPostById(String id) {
-        return postService.getById(id);
-    }
 }

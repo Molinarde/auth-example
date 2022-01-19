@@ -2,7 +2,6 @@ package com.example.simpleprojectungram.config;
 
 import com.example.simpleprojectungram.security.jwt.AuthEntryPointJwt;
 import com.example.simpleprojectungram.security.jwt.JwtFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,11 +16,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+    private final AuthEntryPointJwt unauthorizedHandler;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(JwtFilter jwtFilter, AuthEntryPointJwt unauthorizedHandler) {
         this.jwtFilter = jwtFilter;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
 
     @Override
@@ -35,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/profile/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/comment/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/gallery/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/auth/*").permitAll()
                 .and()

@@ -34,7 +34,7 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(String userId) throws NoEntityException {
         RefreshToken refreshToken = new RefreshToken();
-        User userById = userService.getById(userId);
+        User userById = userService.getById(userId).get();
 
         refreshToken.setUserId(userId);
         refreshToken.setUsername(userById.getUsername());

@@ -1,6 +1,6 @@
 package com.example.simpleprojectungram.security.jwt;
 
-import com.example.simpleprojectungram.security.*;
+import com.example.simpleprojectungram.security.CustomUserDetails;
 import com.example.simpleprojectungram.security.service.CustomUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +39,7 @@ public class JwtFilter extends GenericFilterBean {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Can`t set user authentication: {}", e);
         }
         filterChain.doFilter(servletRequest, servletResponse);

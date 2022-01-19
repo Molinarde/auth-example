@@ -2,11 +2,10 @@ package com.example.simpleprojectungram.controller;
 
 import com.example.simpleprojectungram.exception.NoEntityException;
 import com.example.simpleprojectungram.exception.NotFoundTokenException;
-import com.example.simpleprojectungram.security.payload.request.TokenRefreshRequest;
 import com.example.simpleprojectungram.security.payload.request.SignupRequest;
+import com.example.simpleprojectungram.security.payload.request.TokenRefreshRequest;
 import com.example.simpleprojectungram.security.payload.request.TokenRequest;
 import com.example.simpleprojectungram.service.AuthService;
-import com.example.simpleprojectungram.service.impl.AuthServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

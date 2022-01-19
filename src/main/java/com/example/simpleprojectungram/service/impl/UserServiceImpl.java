@@ -21,14 +21,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User insertUser(User user) {
+    public User addUser(User user) {
         return userRepository.insert(user);
     }
 
     @Override
-    public User getById(String userId) {
-//        return userRepository.findById(userId).orElseThrow(() -> new NoEntityException(String.format("No found %s", userId)));
-        return userRepository.findById(userId).get();
+    public Optional<User> getById(String userId) {
+        return userRepository.findById(userId);
     }
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {

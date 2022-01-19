@@ -1,7 +1,9 @@
 package com.example.simpleprojectungram.controller;
 
+import com.example.simpleprojectungram.exception.NoEntityException;
 import com.example.simpleprojectungram.model.Post;
 import com.example.simpleprojectungram.model.dto.ProfileDTO;
+import com.example.simpleprojectungram.service.PostService;
 import com.example.simpleprojectungram.service.impl.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,54 +16,42 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
 
     private final ProfileServiceImpl profileService;
+    private final PostService postService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    public ProfileController(ProfileServiceImpl profileService) {
+    public ProfileController(ProfileServiceImpl profileService, PostService postService) {
         this.profileService = profileService;
+        this.postService = postService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileDTO> getProfileById(@PathVariable String id) {
-        ProfileDTO profile = profileService.getById(id);
-
-        return new ResponseEntity<>(profile, HttpStatus.OK);
+    public ResponseEntity<?> getProfileById(@PathVariable String id) {
+        Optional<ProfileDTO> profileById = profileService.getProfileById(id);
+        return profileById.isPresent() ? new ResponseEntity<>(profileById.get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/update/post")
-    public ResponseEntity<Post> updatePost(@RequestParam("file") MultipartFile file,
-                                           @Valid Post post){
-        if(file.isEmpty()){
-            Post result = profileService.updatePost(post);
+    public ResponseEntity<?> updatePost(@RequestParam("file") MultipartFile file,
+                                        @Valid Post post) throws NoEntityException {
 
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }else{
-            Post uploadPostWithImg = profileService.uploadFile(file, post);
-            Post result = profileService.updatePost(uploadPostWithImg);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-
+        return postService.updatePost(file, post) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
 
     @PostMapping("/add/post")
     public ResponseEntity<Post> addPost(@RequestParam("file") MultipartFile file, @Valid Post post) throws IOException {
-        Post fileUpload = profileService.uploadFile(file, post);
-
-        if (fileUpload != null) {
-            Post newPost = profileService.addPost(post);
-            return new ResponseEntity<>(newPost, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Optional<Post> postResult = postService.addPost(file, post);
+        return postResult.isPresent() ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value = "/image/", produces = MediaType.IMAGE_JPEG_VALUE)
