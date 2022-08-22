@@ -36,8 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (byId.isPresent()) {
             User user = byId.get();
             List<Post> allPostByAuthorId = postService.getAllPostByAuthorId(user.getId());
-            Optional<ProfileDTO> profileDTO = Optional.of(userProfileMapper.mapUserToProfile(user, allPostByAuthorId));
-            return profileDTO;
+            return Optional.of(userProfileMapper.mapUserToProfile(user, allPostByAuthorId));
         }
 
         return Optional.empty();

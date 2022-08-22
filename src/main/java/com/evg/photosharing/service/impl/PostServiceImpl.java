@@ -58,7 +58,7 @@ public class PostServiceImpl implements PostService {
                 uploadDir.mkdir();
             }
 
-            resultFileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
+            resultFileName = UUID.randomUUID() + "." + file.getOriginalFilename();
 
             try {
                 file.transferTo(new File(uploadPath + "/" + resultFileName));

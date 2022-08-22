@@ -24,7 +24,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         List<User> all = userService.getAll();
         if (all.size() > 5) {
             int i = rand.nextInt(all.size() - 5);
-            List<RecommendationDTO> collect = all
+            return all
                     .stream()
                     .skip(i)
                     .limit(5)
@@ -36,9 +36,8 @@ public class RecommendationServiceImpl implements RecommendationService {
                         return recommendationDTO;
                     })
                     .collect(Collectors.toList());
-            return collect;
         }
-        List<RecommendationDTO> recommendationDTOS = all.stream()
+        return all.stream()
                 .map(user -> {
                     RecommendationDTO recommendationDTO = new RecommendationDTO();
                     recommendationDTO.setUserId(user.getId());
@@ -47,7 +46,6 @@ public class RecommendationServiceImpl implements RecommendationService {
                     return recommendationDTO;
                 })
                 .collect(Collectors.toList());
-        return recommendationDTOS;
     }
 
 }

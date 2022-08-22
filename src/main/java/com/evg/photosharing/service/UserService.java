@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User addUser(User user);
+    void addUser(User user);
 
     User getByUsernameAndPassword(TokenRequest loginRequest) throws EntityNotFoundException;
 

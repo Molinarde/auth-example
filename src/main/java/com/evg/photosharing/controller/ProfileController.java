@@ -49,17 +49,18 @@ public class ProfileController {
 
 
     @PostMapping("/add/post")
-    public ResponseEntity<Post> addPost(@RequestParam("file") MultipartFile file, @Valid Post post) throws IOException {
+    public ResponseEntity<Post> addPost(@RequestParam("file") MultipartFile file, @Valid Post post) {
         Optional<Post> postResult = postService.addPost(file, post);
         return postResult.isPresent() ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value = "/image/", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> test() throws IOException {
-//        Resource image = profileService.loadAsResource(imageName);
         URL url = new URL("https://altaitop.ru/wp-content/uploads/2021/02/6E9DuB1Nxg.jpg");
-        InputStream inputStream = url.openStream();
-        byte[] bytes = inputStream.readAllBytes();
+        byte[] bytes;
+        try (InputStream inputStream = url.openStream()) {
+            bytes = inputStream.readAllBytes();
+        }
         return new ResponseEntity<>(bytes, HttpStatus.OK);
     }
 }

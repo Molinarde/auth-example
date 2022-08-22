@@ -31,9 +31,13 @@ public class RefreshTokenService {
         return refreshTokenRepository.findByToken(token);
     }
 
-    public RefreshToken createRefreshToken(String userId) throws EntityNotFoundException {
+    public RefreshToken createRefreshToken(String userId) {
         RefreshToken refreshToken = new RefreshToken();
-        User userById = userService.getById(userId).get();
+
+        Optional<User> byId = userService.getById(userId);
+        if (byId.isEmpty())
+            throw new EntityNotFoundException("User not found");
+        User userById = byId.get();
 
         refreshToken.setUserId(userId);
         refreshToken.setUsername(userById.getUsername());

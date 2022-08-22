@@ -1,5 +1,6 @@
 package com.evg.photosharing.service.impl;
 
+import com.evg.photosharing.exception.EntityNotFoundException;
 import com.evg.photosharing.model.Comment;
 import com.evg.photosharing.model.Post;
 import com.evg.photosharing.model.User;
@@ -35,6 +36,9 @@ public class CommentServiceImpl implements CommentService {
                 return Optional.of(commentRepository.save(comment));
             } else {
                 Optional<Comment> parentComment = commentRepository.findById(comment.getParentId());
+                if(parentComment.isEmpty())
+                    throw new EntityNotFoundException("Comment not found");
+
                 if (parentComment.get().getPostId().equals(comment.getPostId())) {
                     return Optional.of(commentRepository.insert(comment));
                 }

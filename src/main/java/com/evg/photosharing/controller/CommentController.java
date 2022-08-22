@@ -33,7 +33,6 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<Comment> getCommentById(String id) {
         Optional<Comment> commentById = commentService.getCommentById(id);
-        return commentById.isPresent() ? new ResponseEntity<>(commentById.get(), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return commentById.map(comment -> new ResponseEntity<>(comment, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }

@@ -1,4 +1,4 @@
-package test.java.com.evg.simpleprojectungram;
+package com.evg.photosharing;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
